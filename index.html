@@ -194,6 +194,7 @@
     transition: grid-template-columns .45s cubic-bezier(.2,.7,.3,1);
   }
   .choices.is-solo { grid-template-columns: 1fr 0fr; gap: 0; }
+  .choices.is-solo .slot { display: none; }
   @media (max-width: 420px) {
     .choices { grid-template-columns: 1fr; }
     .choices.is-solo { grid-template-columns: 1fr; }
@@ -750,8 +751,12 @@
 
     var summary = '';
 
+    var alreadySent = false;
+
     btnConfirm.addEventListener('click', function () {
-      if (!chosen) return;
+      if (!chosen || alreadySent) return;
+      alreadySent = true;
+      btnConfirm.disabled = true;
       summary = '데이트 수락 ✓\n시간 · 15:30\n장소 · ' + chosen.floor + ' ' + chosen.name;
 
       document.getElementById('receipt').innerHTML = receiptHTML();
